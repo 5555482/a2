@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { CustomerComponent } from './customer/customer.component';
-import { CustomerService } from './customer.service';
+import { Component } from '@angular/core';
+
+// import { CustomerService } from './customer/customer.service';
+// import { CustomersComponent } from './customer/customers.component';
+
+// here is my barrel // future i would just import './customer'
+import { CustomersComponent, CustomerService } from './customer/index';
 
 @Component({
-    moduleId: __moduleName,
-    selector: 'my-customers',
-    templateUrl: 'customers.component.html',
-    directives: [CustomerComponent],
-    providers: [CustomerService]
+  moduleId: module.id,
+  selector: 'my-app',
+  templateUrl: 'app.component.html',
+  directives: [CustomersComponent],
+  providers: [CustomerService]
 })
-export class CustomerComponent implements OnInit{
-    customers: Observable<any[]>;
+export class AppComponent {
+  // [ ] means property binding - C to D
+  // ( ) means event binding - D to C
+  title = 'Customer App';
+  name = 'Ward';
+  wardsColor = 'green';
 
-    constructor(private _customerService: CustomerService) { }
-
-    ngOnInit() {
-        this.customers = this._customerService.getCustomers()
-            .catch((err) => {
-                console.log(err);
-                return Observable.of(true);
-            });
-    }
+  changeSuitColor() {
+    this.wardsColor = this.wardsColor === 'green' ? 'red' : 'green';
+  }
 }
-
